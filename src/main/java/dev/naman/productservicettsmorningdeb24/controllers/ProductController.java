@@ -1,12 +1,11 @@
 package dev.naman.productservicettsmorningdeb24.controllers;
 
+import dev.naman.productservicettsmorningdeb24.dtos.CreateProductRequestDto;
 import dev.naman.productservicettsmorningdeb24.models.Product;
 import dev.naman.productservicettsmorningdeb24.services.FakeStoreProductService;
 import dev.naman.productservicettsmorningdeb24.services.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class ProductController {
@@ -15,11 +14,16 @@ public class ProductController {
 //    List<Integer> li = new ArrayList<>();
 
     private ProductService productService;
+    private RestTemplate restTemplate;
+
 //    private ProductService productService2 = new FakeStoreProductService();
 
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService,
+                             RestTemplate restTemplate
+    ) {
         this.productService = productService;
+        this.restTemplate = restTemplate;
     }
 
 // private ProductService productService;
@@ -30,10 +34,17 @@ public class ProductController {
     //     title:
     //     description:
     //     price:
+    //     category: "mobile"
     // }
     @PostMapping("/products")
-    public void createProduct() {
-
+    public Product createProduct(@RequestBody CreateProductRequestDto request) {
+        return productService.createProduct(
+                request.getTitle(),
+                request.getDescription(),
+                request.getCategory(),
+                request.getPrice(),
+                request.getImage()
+        );
     }
 
     // GET /products/1
