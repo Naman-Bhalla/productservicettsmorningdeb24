@@ -4,8 +4,12 @@ import dev.naman.productservicettsmorningdeb24.dtos.CreateProductRequestDto;
 import dev.naman.productservicettsmorningdeb24.models.Product;
 import dev.naman.productservicettsmorningdeb24.services.FakeStoreProductService;
 import dev.naman.productservicettsmorningdeb24.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -56,8 +60,13 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public void getAllProduct() {
+    public ResponseEntity<List<Product>> getAllProduct() {
 
+        List<Product> products = productService.getProducts();
+
+        ResponseEntity<List<Product>> response = new ResponseEntity<>(products, HttpStatus.NOT_FOUND);
+//        response.getHeaders().add("myName", "Naman");
+        return response;
     }
 
     public void updateProduct() {
