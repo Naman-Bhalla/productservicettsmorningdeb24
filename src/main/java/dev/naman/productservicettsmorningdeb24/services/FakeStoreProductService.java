@@ -2,6 +2,7 @@ package dev.naman.productservicettsmorningdeb24.services;
 
 import dev.naman.productservicettsmorningdeb24.dtos.CreateProductRequestDto;
 import dev.naman.productservicettsmorningdeb24.dtos.FakeStoreProductDto;
+import dev.naman.productservicettsmorningdeb24.exceptions.ProductNotFoundException;
 import dev.naman.productservicettsmorningdeb24.models.Product;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -27,21 +28,25 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product getSingleProduct(Long productId) {
+    public Product getSingleProduct(Long productId) throws ProductNotFoundException {
 
         ResponseEntity<FakeStoreProductDto> fakeStoreProductResponse = restTemplate.getForEntity(
                 "https://fakestoreapi.com/products/" + productId,
                 FakeStoreProductDto.class
         );
 
-
-        if (fakeStoreProductResponse.getStatusCode() != HttpStatusCode.valueOf(200)) {
-
-        }
+//
+//        if (fakeStoreProductResponse.getStatusCode() != HttpStatusCode.valueOf(200)) {
+//
+//        }
 
 //        fakeStoreProductResponse.getHeaders().
 
         FakeStoreProductDto fakeStoreProduct = fakeStoreProductResponse.getBody();
+
+        if (fakeStoreProduct == null) {
+            throw new ProductNotFoundException("Product with id: " + productId + " doesn't exist. Retry some other product.");
+        }
 
         return fakeStoreProduct.toProduct();
     }

@@ -1,13 +1,14 @@
 package dev.naman.productservicettsmorningdeb24.services;
 
 import dev.naman.productservicettsmorningdeb24.dtos.CreateProductRequestDto;
+import dev.naman.productservicettsmorningdeb24.exceptions.ProductNotFoundException;
 import dev.naman.productservicettsmorningdeb24.models.Product;
 
 import java.util.List;
 
 public interface ProductService {
 
-    Product getSingleProduct(Long productId);
+    Product getSingleProduct(Long productId) throws ProductNotFoundException;
 
     List<Product> getProducts();
 
