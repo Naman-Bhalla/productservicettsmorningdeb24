@@ -69,7 +69,7 @@ public class ProductController {
 
 //        throw new ProductNotFoundException("Bla bla bla");
 
-        ResponseEntity<List<Product>> response = new ResponseEntity<>(products, HttpStatus.NOT_FOUND);
+        ResponseEntity<List<Product>> response = new ResponseEntity<>(products, HttpStatus.OK);
         return response;
     }
 

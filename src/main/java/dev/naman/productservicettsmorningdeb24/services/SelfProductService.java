@@ -23,12 +23,12 @@ public class SelfProductService implements ProductService {
 
     @Override
     public Product getSingleProduct(Long productId) throws ProductNotFoundException {
-        return null;
+        return productRepository.findByIdIs(productId);
     }
 
     @Override
     public List<Product> getProducts() {
-        return null;
+        return productRepository.findAll();
     }
 
     @Override
